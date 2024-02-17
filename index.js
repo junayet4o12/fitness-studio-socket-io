@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 3000;
-const frontendUrl = "http://localhost:5173";
+const frontendUrl = "https://fitness-studio.surge.sh";
 app.use(express.json());
 
 // socketio connect  start
