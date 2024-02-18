@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 3000;
-const frontendUrl = "https://fitness-studio.surge.sh";
+const frontendUrl = "http://localhost:5173";
 app.use(express.json());
 
 // socketio connect  start
@@ -30,6 +30,16 @@ io.on("connection", (socket) => {
     console.log('Message received:', message);
     // Broadcast the message to all connected clients
     io.emit('refetch', message);
+  });
+  socket.on("unreadmessage", (message) => {
+    console.log("Message received:", message);
+    // Broadcast the message to all connected clients
+    io.emit("unreadmessage", message);
+  });
+  socket.on('unread_refetch', (message) => {
+    console.log('Message received:', message);
+    // Broadcast the message to all connected clients
+    io.emit('unread_refetch', message);
   });
 
 
