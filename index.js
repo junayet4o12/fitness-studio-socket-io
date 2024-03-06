@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 3000;
+// const frontendUrl = "https://fitness-studio.surge.sh";
 const frontendUrl = "http://localhost:5173";
 app.use(express.json());
 
@@ -11,7 +12,7 @@ const http = require("http");
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: frontendUrl,
+    origin: '*',
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -41,7 +42,10 @@ io.on("connection", (socket) => {
     // Broadcast the message to all connected clients
     io.emit('unread_refetch', message);
   });
-
+  socket.on('read_unread_message', (message) => {
+    console.log(message);
+    io.emit('read_unread_message', message)
+  })
 
   socket.on("disconnect", () => {
     console.log("User disconnected");
